@@ -7,33 +7,16 @@
 
 This is a template for use with the [Leptos](https://github.com/leptos-rs/leptos) web framework and the [cargo-leptos](https://github.com/akesson/cargo-leptos) tool using [Axum](https://github.com/tokio-rs/axum).
 
-## Creating your template repo
-
-If you don't have `cargo-leptos` installed you can install it with
-
-```bash
-cargo install cargo-leptos
-```
-
-Then run
-```bash
-cargo leptos new --git leptos-rs/start-axum
-```
-
-to generate a new project template.
-
-```bash
-cd {projectname}
-```
-
-to go to your newly created project.  
-Feel free to explore the project structure, but the best place to start with your application code is in `src/app.rs`.  
-Addtionally, Cargo.toml may need updating as new versions of the dependencies are released, especially if things are not working after a `cargo update`.
-
 ## Running your project
+
+To run the project in development mode you need to spin up two processes, one for Leptos and another one for Tailwind (styling).
 
 ```bash
 cargo leptos watch
+```
+
+```bash
+npx tailwindcss -i style/tailwind.css -o style/generated.css --watch
 ```
 
 ## Installing Additional Tools
@@ -44,7 +27,7 @@ By default, `cargo-leptos` uses `nightly` Rust, `cargo-generate`, and `sass`. If
 2. `rustup default nightly` - setup nightly as default, or you can use rust-toolchain file later on
 3. `rustup target add wasm32-unknown-unknown` - add the ability to compile Rust to WebAssembly
 4. `cargo install cargo-generate` - install `cargo-generate` binary (should be installed automatically in future)
-5. `npm install -g sass` - install `dart-sass` (should be optional in future
+5. `npm install -g sass` - install `dart-sass` (should be optional in future)
 
 ## Compiling for Release
 ```bash
