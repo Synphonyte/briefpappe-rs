@@ -1,10 +1,15 @@
 use cfg_if::cfg_if;
 use leptos::*;
+
 pub mod app;
 pub mod error_template;
 pub mod fileserv;
 pub mod server_functions;
 pub mod types;
+mod components;
+mod i18n;
+
+pub const STATIC_URL: &str = "https://pepe.cces.ch/";
 
 cfg_if! { if #[cfg(feature = "hydrate")] {
 

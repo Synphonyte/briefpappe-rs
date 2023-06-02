@@ -1,8 +1,9 @@
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
-use crate::types::{Paper, PaperFilter};
-use crate::server_functions::list_papers;
+use crate::types::CollectionFilter;
+use crate::server_functions::list_collections;
+use crate::components::*;
 
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
@@ -17,7 +18,7 @@ pub fn App(cx: Scope) -> impl IntoView {
         <Stylesheet id="leptos" href="/pkg/start-axum.css"/>
 
         // sets the document title
-        <Title text="Welcome to Leptos"/>
+        <Title text="Briefpappe"/>
 
         // content for this welcome page
         <Router>
@@ -33,14 +34,14 @@ pub fn App(cx: Scope) -> impl IntoView {
 /// Renders the home page of your application.
 #[component]
 fn HomePage(cx: Scope) -> impl IntoView {
-    let (filter, set_filter) = create_signal(cx, PaperFilter::default());
-    let filter_res = create_resource(cx, filter, list_papers);
+    let (filter, set_filter) = create_signal(cx, CollectionFilter::default());
+    let filter_res = create_resource(cx, filter, list_collections);
 
     let papers_view = move || {
-        filter_res.with(cx, |papers| {
-            papers.clone().map(|papers| {
-                papers.iter().map(|paper| {
-                    view! { cx, <PaperView paper=paper.clone()/> }
+        filter_res.with(cx, |collections| {
+            collections.clone().map(|collections| {
+                collections.iter().map(|collection| {
+                    view! { cx, <CollectionLink collection=collection.clone()/> }
                 }).collect::<Vec<_>>()
             })
         })
@@ -51,15 +52,5 @@ fn HomePage(cx: Scope) -> impl IntoView {
         <Suspense fallback=move || view! { cx, <p>"Loading posts..."</p> }>
             <ul>{papers_view}</ul>
         </Suspense>
-    }
-}
-
-#[component]
-fn PaperView(cx: Scope, paper: Paper) -> impl IntoView {
-    view! { cx,
-        <li>
-            <h2>{ paper.title }</h2>
-            <p>{ paper.tags.join(", ") }</p>
-        </li>
     }
 }

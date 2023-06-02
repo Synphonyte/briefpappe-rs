@@ -1,24 +1,30 @@
 use leptos::*;
-use crate::types::{Paper, PaperFilter};
+use crate::types::{Collection, CollectionFilter};
 
-#[server(ListPapers, "/api", "Cbor")]
-pub async fn list_papers(filter: PaperFilter) -> Result<Vec<Paper>, ServerFnError> {
+#[server(ListCollections, "/api", "Cbor")]
+pub async fn list_collections(filter: CollectionFilter) -> Result<Vec<Collection>, ServerFnError> {
     // TODO : implement filtering
     Ok(vec![
-        Paper {
+        Collection {
             title: "Paper 1".to_string(),
             tags: vec!["tag1".to_string(), "tag2".to_string()],
             timestamp: 0,
+            slug: "paper-1".to_string(),
+            papers: vec!["22-anchor-hope".to_string()],
         },
-        Paper {
+        Collection {
             title: "Paper 1".to_string(),
             tags: vec!["tag1".to_string(), "tag2".to_string()],
             timestamp: 2,
+            slug: "paper-2".to_string(),
+            ..Default::default()
         },
-        Paper {
+        Collection {
             title: "Paper 2".to_string(),
             tags: vec!["tag1".to_string(), "tag2".to_string()],
             timestamp: 1,
+            slug: "paper-3".to_string(),
+            ..Default::default()
         },
     ])
 }
@@ -26,5 +32,5 @@ pub async fn list_papers(filter: PaperFilter) -> Result<Vec<Paper>, ServerFnErro
 
 #[cfg(feature = "ssr")]
 pub fn register_server_functions() {
-    _ = ListPapers::register();
+    _ = ListCollections::register();
 }
