@@ -1,5 +1,5 @@
-use leptos::*;
 use crate::types::{Collection, CollectionFilter};
+use leptos::*;
 
 #[server(ListCollections, "/api", "Cbor")]
 pub async fn list_collections(filter: CollectionFilter) -> Result<Vec<Collection>, ServerFnError> {
@@ -27,10 +27,4 @@ pub async fn list_collections(filter: CollectionFilter) -> Result<Vec<Collection
             ..Default::default()
         },
     ])
-}
-
-
-#[cfg(feature = "ssr")]
-pub fn register_server_functions() {
-    _ = ListCollections::register();
 }

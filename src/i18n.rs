@@ -1,6 +1,4 @@
-use leptos::Scope;
-
-pub fn locale_path(cx: Scope, path: &str) -> String {
+pub fn locale_path(path: &str) -> String {
     // TODO
     format!("{}", path)
 }

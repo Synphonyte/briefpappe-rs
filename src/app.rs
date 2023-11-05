@@ -1,21 +1,17 @@
+use crate::components::*;
+use crate::server_functions::list_collections;
+use crate::types::CollectionFilter;
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
-use crate::types::CollectionFilter;
-use crate::server_functions::list_collections;
-use crate::components::*;
 
 #[component]
-pub fn App(cx: Scope) -> impl IntoView {
+pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc.
-    provide_meta_context(cx);
+    provide_meta_context();
 
     view! {
-        cx,
-
-        // injects a stylesheet into the document <head>
-        // id=leptos means cargo-leptos will hot-reload this stylesheet
-        <Stylesheet id="leptos" href="/pkg/start-axum.css"/>
+        <Stylesheet id="leptos" href="/pkg/briefpappe_rs.css"/>
 
         // sets the document title
         <Title text="Briefpappe"/>
@@ -24,7 +20,7 @@ pub fn App(cx: Scope) -> impl IntoView {
         <Router>
             <main>
                 <Routes>
-                    <Route path="" view=|cx| view! { cx, <HomePage/> }/>
+                    <Route path="" view=HomePage />
                 </Routes>
             </main>
         </Router>
@@ -33,23 +29,29 @@ pub fn App(cx: Scope) -> impl IntoView {
 
 /// Renders the home page of your application.
 #[component]
-fn HomePage(cx: Scope) -> impl IntoView {
-    let (filter, set_filter) = create_signal(cx, CollectionFilter::default());
-    let filter_res = create_resource(cx, filter, list_collections);
+fn HomePage() -> impl IntoView {
+    let (filter, set_filter) = create_signal(CollectionFilter::default());
+    let filter_res = create_resource(filter, list_collections);
 
     let papers_view = move || {
-        filter_res.with(cx, |collections| {
-            collections.clone().map(|collections| {
-                collections.iter().map(|collection| {
-                    view! { cx, <CollectionLink collection=collection.clone()/> }
-                }).collect::<Vec<_>>()
+        filter_res.with(|collections| {
+            let collections = collections.clone();
+            collections.map(|collections| {
+                collections.map(|collections| {
+                    collections
+                        .iter()
+                        .map(|collection| {
+                            view! { <CollectionLink collection=collection.clone()/> }
+                        })
+                        .collect::<Vec<_>>()
+                })
             })
         })
     };
 
-    view! { cx,
+    view! {
         <h1>"Welcome to Leptos!"</h1>
-        <Suspense fallback=move || view! { cx, <p>"Loading posts..."</p> }>
+        <Suspense fallback=move || view! { <p>"Loading posts..."</p> }>
             <ul>{papers_view}</ul>
         </Suspense>
     }

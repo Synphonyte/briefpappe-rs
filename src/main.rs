@@ -1,18 +1,15 @@
-
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
-    use axum::{extract::Extension, routing::post, Router};
-    use leptos::*;
-    use leptos_axum::{generate_route_list, LeptosRoutes};
+    use axum::{routing::post, Router};
     use briefpappe_rs::app::*;
     use briefpappe_rs::fileserv::file_and_error_handler;
-    use std::sync::Arc;
-    use briefpappe_rs::server_functions::register_server_functions;
+    use briefpappe_rs::state::AppState;
+    use leptos::*;
+    use leptos_axum::{generate_route_list, LeptosRoutes};
+    use log::info;
 
-    simple_logger::init_with_level(log::Level::Debug).expect("couldn't initialize logging");
-
-    register_server_functions();
+    simple_logger::init_with_level(log::Level::Warn).expect("couldn't initialize logging");
 
     // Setting get_configuration(None) means we'll be using cargo-leptos's env values
     // For deployment these variables are:
@@ -22,18 +19,21 @@ async fn main() {
     let conf = get_configuration(None).await.unwrap();
     let leptos_options = conf.leptos_options;
     let addr = leptos_options.site_addr;
-    let routes = generate_route_list(|cx| view! { cx, <App/> }).await;
+    let routes = generate_route_list(App);
 
+    let app_state = AppState {
+        leptos_options: leptos_options.clone(),
+    };
     // build our application with a route
     let app = Router::new()
         .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
-        .leptos_routes(leptos_options.clone(), routes, |cx| view! { cx, <App/> })
+        .leptos_routes(&leptos_options, routes, App)
         .fallback(file_and_error_handler)
-        .layer(Extension(Arc::new(leptos_options)));
+        .with_state(app_state);
 
     // run our app with hyper
     // `axum::Server` is a re-export of `hyper::Server`
-    log!("listening on http://{}", &addr);
+    info!("listening on http://{}", &addr);
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
         .await
