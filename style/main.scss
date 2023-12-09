@@ -1,6 +1,26 @@
 @import "collection_link";
 
-body {
-  font-family: sans-serif;
-  text-align: center;
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/inter.ttf') format('truetype');
+  font-display: swap;
 }
+
+@font-face {
+  font-family: 'Lexend';
+  src: url('../fonts/lexend.woff2') format('truetype');
+  font-display: swap;
+}
+
+html {
+  height: 100%;
+  --font-inter: 'Inter', 'sans-serif';
+  --font-lexend: 'Lexend', 'sans-serif';
+}
+
+body {
+  margin: 0;
+  line-height: inherit;
+}
+
+

@@ -1,4 +1,5 @@
 use crate::components::*;
+use crate::layouts::AppLayout;
 use crate::server_functions::list_collections;
 use crate::types::CollectionFilter;
 use leptos::*;
@@ -20,7 +21,9 @@ pub fn App() -> impl IntoView {
         <Router>
             <main>
                 <Routes>
-                    <Route path="" view=HomePage />
+                    <Route path="" view=AppLayout>
+                        <Route path="" view=HomePage />
+                    </Route>
                 </Routes>
             </main>
         </Router>
@@ -50,7 +53,6 @@ fn HomePage() -> impl IntoView {
     };
 
     view! {
-        <h1>"Welcome to Leptos!"</h1>
         <Suspense fallback=move || view! { <p>"Loading posts..."</p> }>
             <ul>{papers_view}</ul>
         </Suspense>

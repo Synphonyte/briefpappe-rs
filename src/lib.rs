@@ -1,9 +1,11 @@
 use cfg_if::cfg_if;
 pub mod app;
+
 mod components;
 pub mod error_template;
 pub mod fileserv;
 mod i18n;
+pub mod layouts;
 pub mod server_functions;
 
 #[cfg(feature = "ssr")]

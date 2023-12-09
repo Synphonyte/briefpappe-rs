@@ -3,14 +3,13 @@ use cfg_if::cfg_if;
 cfg_if! { if #[cfg(feature = "ssr")] {
     use axum::{
         body::{boxed, Body, BoxBody},
-        extract::{Extension, State},
+        extract::State,
         response::IntoResponse,
         http::{Request, Response, StatusCode, Uri},
     };
     use axum::response::Response as AxumResponse;
     use tower::ServiceExt;
     use tower_http::services::ServeDir;
-    use std::sync::Arc;
     use leptos::*;
     use crate::error_template::ErrorTemplate;
     use crate::error_template::AppError;
