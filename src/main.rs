@@ -1,9 +1,10 @@
-cfg_if::cfg_if!{ if #[cfg(feature = "ssr")] {
+cfg_if::cfg_if! { if #[cfg(feature = "ssr")] {
     use axum::extract::State;
     use briefpappe_rs::state::AppState;
     use http::Request;
     use axum::body::Body as AxumBody;
     use axum::response::{IntoResponse, Response};
+    use leptos::logging::log;
     use leptos::*;
     use briefpappe_rs::app::App;
 
@@ -28,7 +29,6 @@ cfg_if::cfg_if!{ if #[cfg(feature = "ssr")] {
         use briefpappe_rs::fileserv::file_and_error_handler;
         use leptos::*;
         use leptos_axum::{generate_route_list, LeptosRoutes};
-        use log::info;
 
         simple_logger::init_with_level(log::Level::Warn).expect("couldn't initialize logging");
 
@@ -54,9 +54,9 @@ cfg_if::cfg_if!{ if #[cfg(feature = "ssr")] {
 
         // run our app with hyper
         // `axum::Server` is a re-export of `hyper::Server`
-        info!("listening on http://{}", &addr);
-        axum::Server::bind(&addr)
-            .serve(app.into_make_service())
+        let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
+        log!("listening on http://{}", &addr);
+        axum::serve(listener, app.into_make_service())
             .await
             .unwrap();
     }
