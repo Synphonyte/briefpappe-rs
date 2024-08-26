@@ -56,6 +56,9 @@ site-root = "target/site"
 # Defaults to pkg
 site-pkg-dir = "pkg"
 # [Optional] The source CSS file. If it ends with .sass or .scss then it will be compiled by dart-sass into CSS. The CSS is optimized by Lightning CSS before being written to <site-root>/<site-pkg>/app.css
+tailwind-input-file = "style/tailwind.css"
+tailwind-config-file = "tailwind.config.js"
+leptos-tailwind-version = "3.4.3"
 style-file = "style/main.scss"
 # [Optional] Files in the asset-dir will be copied to the site-root directory
 assets-dir = "public"
@@ -91,7 +94,6 @@ lib-features = ["hydrate"]
 # Optional. Defaults to false.
 lib-default-features = false
 
-tailwind-input-file = "input.css"
 lib-profile-release = "wasm-release"
 
 [profile.wasm-release]

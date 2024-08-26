@@ -6,6 +6,7 @@ pub mod error_template;
 pub mod fileserv;
 mod i18n;
 pub mod layouts;
+mod routes;
 pub mod server_functions;
 
 #[cfg(feature = "ssr")]

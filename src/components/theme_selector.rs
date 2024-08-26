@@ -23,16 +23,16 @@ pub fn ThemeSelector() -> impl IntoView {
         use_color_mode_with_options(UseColorModeOptions::default().emit_auto(true));
 
     let theme_button_color = move || match mode() {
-        ColorMode::Light => "#38bdf8".to_string(),
+        ColorMode::Light => "#00adfa".to_string(),
         ColorMode::Dark => "#38bdf8".to_string(),
-        _ => "#94a3b8".to_string(),
+        _ => "#111a".to_string(),
     };
 
     let active_icon_color = move |color_mode| {
         if mode() == color_mode {
             "#38bdf8"
         } else {
-            "#94a3b8"
+            "#222a"
         }
     };
     let active_text_class = move |color_mode| {
@@ -46,7 +46,7 @@ pub fn ThemeSelector() -> impl IntoView {
     view! {
         <div class="relative">
             <button
-                class="flex h-6 w-6 items-center justify-center rounded-lg shadow-md shadow-black/5 ring-1 ring-black/5 dark:bg-slate-700 dark:ring-inset dark:ring-white/5"
+                class="flex h-6 w-6 items-center justify-center rounded-lg shadow-md shadow-black/5 ring-1 ring-black/5 bg-slate-200 dark:bg-slate-700 dark:ring-inset dark:ring-white/5"
                 id="select-theme-button"
                 node_ref=popup
                 aria-expanded="false"

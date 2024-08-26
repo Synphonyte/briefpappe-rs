@@ -20,39 +20,23 @@ pub struct Navigation {
 
 #[component]
 pub fn Navigation() -> impl IntoView {
-    let navigation = vec![
-        NavigationSection {
-            title: "Section1",
-            links: Vec::from([
-                NavigationLink {
-                    title: "Nav-Link1",
-                    href: "/",
-                },
-                NavigationLink {
-                    title: "Nav-Link2",
-                    href: "/getting-started",
-                },
-                NavigationLink {
-                    title: "Nav-Link3",
-                    href: "/quickstart",
-                },
-            ]),
-        },
-        NavigationSection {
-            title: "Section2",
-            links: Vec::from([NavigationLink {
+    let navigation = vec![NavigationSection {
+        title: "Collections",
+        links: Vec::from([
+            NavigationLink {
                 title: "Nav-Link1",
-                href: "/guide",
-            }]),
-        },
-        NavigationSection {
-            title: "Section3",
-            links: Vec::from([NavigationLink {
-                title: "Nav-Link1",
-                href: "/api",
-            }]),
-        },
-    ];
+                href: "/",
+            },
+            NavigationLink {
+                title: "Nav-Link2",
+                href: "/",
+            },
+            NavigationLink {
+                title: "Nav-Link3",
+                href: "/",
+            },
+        ]),
+    }];
 
     view! {
         <nav class="text-base lg:text-sm">
