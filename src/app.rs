@@ -1,4 +1,4 @@
-use crate::layouts::AppLayout;
+use crate::layouts::*;
 use crate::routes::*;
 use leptos::*;
 use leptos_meta::*;
@@ -21,8 +21,11 @@ pub fn App() -> impl IntoView {
                 <Routes>
                     <Route path="" view=AppLayout>
                         <Route path="" view=Home />
-                        <Route path="/:slug" view=Doc />
                         <Route path="/collections/:slug" view=Collection />
+                    </Route>
+                    <Route path="/editor" view=EditorLayout>
+                        <Route path="" view=move || view! {} />
+                        <Route path="/:slug" view=Doc />
                     </Route>
                 </Routes>
             </main>

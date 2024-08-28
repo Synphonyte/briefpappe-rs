@@ -3,9 +3,9 @@ use leptos::*;
 use leptos_router::*;
 
 #[component]
-pub fn Header(is_scrolled: Signal<bool>) -> impl IntoView {
+pub fn Header() -> impl IntoView {
     view! {
-        <header class="sticky top-0 z-50 flex flex-none flex-wrap items-center justify-between px-4 py-5 shadow-md shadow-slate-900/5 transition duration-500 dark:shadow-none sm:px-6 lg:px-8">
+        <header class="sticky top-0 z-50 flex flex-none flex-wrap items-center justify-between border-b-2 border-white p-4 shadow-md shadow-slate-900/5 transition duration-500 dark:shadow-none sm:px-6 lg:px-8">
             <div class="mr-6 flex lg:hidden">"<MobileNavigation/>"</div>
             <div class="relative flex flex-grow basis-0 items-center">
                 <A href="/" class="hidden lg:block" attr:aria-label="Home page">
@@ -14,7 +14,6 @@ pub fn Header(is_scrolled: Signal<bool>) -> impl IntoView {
                     </div>
                 </A>
             </div>
-            <div class="-my-5 mr-6 sm:mr-8 md:mr-0">"<Search/>"</div>
             <div class="relative flex basis-0 justify-end gap-6 sm:gap-8 md:flex-grow">
                 <ThemeSelector />
             </div>
